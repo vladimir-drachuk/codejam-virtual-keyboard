@@ -1,0 +1,73 @@
+body {
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 880px;
+    list-style-type: none;
+}
+
+.button {
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+    padding-top: 15px;
+    box-sizing: border-box;
+    margin: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -1px;
+}
+
+.button:hover {
+    background-color: lightsteelblue;
+}
+
+.tab, .backslash, .altleft, .altright {
+    width: 70px;
+    background-color: lightslategray;
+
+}
+
+.backspace, .shiftleft {
+    width: 90px;
+    background-color: lightslategray;
+}
+
+.capslock {
+    width: 80px;
+    background-color: lightslategray;
+}
+
+.enter {
+    width: 120px;
+    background-color: lightslategray;
+}
+
+.shiftright {
+    width: 110px;
+    background-color: lightslategray;
+}
+
+.space {
+    width: 350px;
+    background-color: lightslategray;
+}
+
+.controlleft, 
+.controlright, 
+.metaleft, .arrowup, 
+.arrowdown, 
+.arrowleft, 
+.arrowright {
+    background-color: lightslategray;
+}
