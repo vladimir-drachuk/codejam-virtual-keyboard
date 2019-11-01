@@ -1,4 +1,6 @@
 const ul = document.createElement('ul');
+const textarea = document.createElement('textarea');
+document.body.appendChild(textarea);
 document.body.appendChild(ul);
 
 
