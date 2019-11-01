@@ -21,6 +21,7 @@ const keyStorage = {
     'caps lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 'xz', 'enter',
     'shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'shift',
     'ctrl', 'win', 'alt', ' ', 'alt', '◀', '▼', '▶', 'ctrl'],
+  link : [],
 };
 
 
@@ -48,4 +49,24 @@ for (let i = 0; i < 63; i += 1) {
   button.setText();
   ul.appendChild(button.elem);
   button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
+  keyStorage.link.push(button.elem);
 }
+console.log(keyStorage.class)
+document.addEventListener('keydown', (event) => {
+  event.preventDefault();
+  if (event.code === 'Backspace') {
+    const str = textarea.value.substr(0, textarea.value.length - 1);
+    textarea.value = str;
+  } else {
+    textarea.value += keyStorage.en[keyStorage.code.indexOf(event.code)];
+  }
+  keyStorage.link[keyStorage.code.indexOf(event.code)].classList.add('click');
+});
+
+document.addEventListener('keyup', (event) => {
+  keyStorage.link[keyStorage.code.indexOf(event.code)].classList.remove('click');
+});
+
+document.addEventListener('mousedown', (event) => {
+  textarea.value += keyStorage.en[keyStorage.code.indexOf(event.code)];
+});
