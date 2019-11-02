@@ -71,6 +71,9 @@ function ChangeLanguage() {
         keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
       }
     });
+    if (keyStorage.firstline.length !== 0) {
+      keyStorage.firstline[0] = '~';
+    }
   } else {
     localStorage.setItem('lang', 'ru');
     keyStorage.code.forEach((item, i) => {
@@ -79,6 +82,9 @@ function ChangeLanguage() {
         keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
       }
     });
+    if (keyStorage.firstline.length !== 0) {
+      keyStorage.firstline[0] = 'ё';
+    }
   }
 }
 
@@ -111,7 +117,9 @@ for (let i = 0; i < 63; i += 1) {
   || button.elem.textContent === '='
   || button.elem.textContent === '`'
   || button.elem.textContent === 'ё'
-  || button.elem.textContent === 'Ё') {
+  || button.elem.textContent === 'Ё'
+  || button.elem.textContent === '\\'
+  || button.elem.textContent === '|') {
     button.elem.classList.add('firstLine');
   }
   keyStorage.link.push(button.elem);
@@ -121,13 +129,14 @@ CapsLock();
 
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
-  keyStorage.link[keyStorage.code.indexOf(event.code)].classList.add('click');
+  if (keyStorage.code.indexOf(event.code) !== -1) {
+    keyStorage.link[keyStorage.code.indexOf(event.code)].classList.add('click');
+  }
   if (event.code === 'Backspace') {
     const str = textarea.value.substr(0, textarea.value.length - 1);
     textarea.value = str;
     return;
   }
-
   if (event.code === 'Tab') {
     textarea.value += '   ';
     return;
@@ -148,9 +157,10 @@ document.addEventListener('keydown', (event) => {
     return;
   }
   if (event.code === 'ControlRight') {
-    return;
-  }
-  if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
+    keyStorage.changelanguage[2] = 1;
+    if (keyStorage.changelanguage[3] === 1) {
+      ChangeLanguage();
+    }
     return;
   }
   if (event.code === 'AltLeft') {
@@ -161,19 +171,26 @@ document.addEventListener('keydown', (event) => {
     return;
   }
   if (event.code === 'AltRight') {
+    keyStorage.changelanguage[3] = 1;
+    if (keyStorage.changelanguage[2] === 1) {
+      ChangeLanguage();
+    }
     return;
   }
-
   if (event.code === 'Enter') {
     textarea.value += '\n';
     return;
   }
-  textarea.value += keyStorage.link[keyStorage.code.indexOf(event.code)].textContent;
+  if (keyStorage.code.indexOf(event.code) !== -1) {
+    textarea.value += keyStorage.link[keyStorage.code.indexOf(event.code)].textContent;
+  }
 });
 
 document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') return;
-  keyStorage.link[keyStorage.code.indexOf(event.code)].classList.remove('click');
+  if (keyStorage.code.indexOf(event.code) !== -1) {
+    keyStorage.link[keyStorage.code.indexOf(event.code)].classList.remove('click');
+  }
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     keyStorage.shiftArray.forEach((item, i) => {
       keyStorage.shiftArray[i].textContent = keyStorage.firstline[i];
@@ -187,10 +204,22 @@ document.addEventListener('keyup', (event) => {
       }
     });
   }
-  keyStorage.changelanguage[0] = 0;
-  keyStorage.changelanguage[1] = 0;
+  const arr = [0, 0, 0, 0];
+  keyStorage.changelanguage.splice(0, keyStorage.changelanguage.length, ...arr);
 });
 
 ul.addEventListener('mousedown', (event) => {
-  textarea.value += keyStorage.en[keyStorage.code.indexOf(event.code)];
+  if (event.target.classList.contains('button') && !(event.target.classList.contains('specialButton'))) {
+    textarea.value += event.target.textContent;
+  }
+  if (event.target.classList.contains('enter')) {
+    textarea.value += '\n';
+  }
+  if (event.target.classList.contains('capslock')) {
+    CapsLock();
+  }
+  if (event.target.classList.contains('backspace')) {
+    const str = textarea.value.substr(0, textarea.value.length - 1);
+    textarea.value = str;
+  }
 });
