@@ -23,36 +23,6 @@ class Box {
   }
 }
 
-function addClass() {
-  if (button.elem.textContent === 'tab'
-  || button.elem.textContent === 'shift'
-  || button.elem.textContent === 'caps lock'
-  || button.elem.textContent === 'backspace'
-  || button.elem.textContent === 'alt'
-  || button.elem.textContent === 'enter'
-  || button.elem.textContent === 'ctrl'
-  || button.elem.textContent === 'win') {
-    button.elem.classList.add('specialButton');
-  }  
-  if (button.elem.textContent === '1'
-  || button.elem.textContent === '2'
-  || button.elem.textContent === '3'
-  || button.elem.textContent === '4'
-  || button.elem.textContent === '5'
-  || button.elem.textContent === '6'
-  || button.elem.textContent === '7'
-  || button.elem.textContent === '8'
-  || button.elem.textContent === '9'
-  || button.elem.textContent === '0'
-  || button.elem.textContent === '-'
-  || button.elem.textContent === '='
-  || button.elem.textContent === '`'
-  || button.elem.textContent === 'ё'
-  || button.elem.textContent === 'Ё') {
-    button.elem.classList.add('firstLine');
-  }
-}
-
 function CapsLock() {
   if (localStorage.capslock === null || localStorage.capslock === 'false') {
     localStorage.setItem('capslock', true);
@@ -79,6 +49,12 @@ function Shift() {
     if (keyStorage.link[i].classList.contains('firstLine')) {
       keyStorage.shiftArray.push(keyStorage.link[i]);
       keyStorage.firstline.push(keyStorage.link[i].textContent);
+    }
+    if (localStorage.capslock === 'false' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+      keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
+    }
+    if (localStorage.capslock === 'true' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+      keyStorage.link[i].textContent = keyStorage.link[i].textContent.toLowerCase();
     }
   });
   keyStorage.shiftArray.forEach((item, i) => {
@@ -111,7 +87,33 @@ for (let i = 0; i < 63; i += 1) {
   button.setText();
   ul.appendChild(button.elem);
   button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
-  addClass();
+  if (button.elem.textContent === 'tab'
+  || button.elem.textContent === 'shift'
+  || button.elem.textContent === 'caps lock'
+  || button.elem.textContent === 'backspace'
+  || button.elem.textContent === 'alt'
+  || button.elem.textContent === 'enter'
+  || button.elem.textContent === 'ctrl'
+  || button.elem.textContent === 'win') {
+    button.elem.classList.add('specialButton');
+  }
+  if (button.elem.textContent === '1'
+  || button.elem.textContent === '2'
+  || button.elem.textContent === '3'
+  || button.elem.textContent === '4'
+  || button.elem.textContent === '5'
+  || button.elem.textContent === '6'
+  || button.elem.textContent === '7'
+  || button.elem.textContent === '8'
+  || button.elem.textContent === '9'
+  || button.elem.textContent === '0'
+  || button.elem.textContent === '-'
+  || button.elem.textContent === '='
+  || button.elem.textContent === '`'
+  || button.elem.textContent === 'ё'
+  || button.elem.textContent === 'Ё') {
+    button.elem.classList.add('firstLine');
+  }
   keyStorage.link.push(button.elem);
 }
 CapsLock();
@@ -134,7 +136,7 @@ document.addEventListener('keydown', (event) => {
     CapsLock();
     return;
   }
-  if (event.code === 'ShiftLeft'|| event.code === 'ShiftRight') {
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     Shift();
     return;
   }
@@ -172,9 +174,19 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') return;
   keyStorage.link[keyStorage.code.indexOf(event.code)].classList.remove('click');
-  keyStorage.shiftArray.forEach((item, i) => {
-    keyStorage.shiftArray[i].textContent = keyStorage.firstline[i];
-  });
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    keyStorage.shiftArray.forEach((item, i) => {
+      keyStorage.shiftArray[i].textContent = keyStorage.firstline[i];
+    });
+    keyStorage.link.forEach((item, i) => {
+      if (localStorage.capslock === 'false' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+        keyStorage.link[i].textContent = keyStorage.link[i].textContent.toLowerCase();
+      }
+      if (localStorage.capslock === 'true' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+        keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
+      }
+    });
+  }
   keyStorage.changelanguage[0] = 0;
   keyStorage.changelanguage[1] = 0;
 });
