@@ -19,6 +19,7 @@ const keyStorage = {
   firstline: [],
   link: [],
   shiftArray: [],
+  changelanguage: [0, 0, 0, 0],
 };
 
 export default keyStorage;

@@ -4,7 +4,6 @@ const ul = document.createElement('ul');
 const textarea = document.createElement('textarea');
 document.body.appendChild(textarea);
 document.body.appendChild(ul);
-//const shiftArray = [];
 
 class Box {
   constructor(rutext, entext, code) {
@@ -25,7 +24,6 @@ class Box {
 }
 
 function addClass() {
-  button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
   if (button.elem.textContent === 'tab'
   || button.elem.textContent === 'shift'
   || button.elem.textContent === 'caps lock'
@@ -76,29 +74,48 @@ function CapsLock() {
 }
 
 function Shift() {
-  keyStorage.firstline.length = 0;
   keyStorage.shiftArray.length = 0;
-  console.log(keyStorage.firstline);
   keyStorage.link.forEach((item, i) => {
     if (keyStorage.link[i].classList.contains('firstLine')) {
       keyStorage.shiftArray.push(keyStorage.link[i]);
       keyStorage.firstline.push(keyStorage.link[i].textContent);
     }
   });
-  console.log(keyStorage.shiftArray);
-  console.log(keyStorage.firstline);
   keyStorage.shiftArray.forEach((item, i) => {
     keyStorage.shiftArray[i].textContent = keyStorage.firstlineS[i];
   });
+}
+
+function ChangeLanguage() {
+  if (localStorage.lang === null || localStorage.lang === 'ru') {
+    localStorage.setItem('lang', 'en');
+    keyStorage.code.forEach((item, i) => {
+      keyStorage.link[i].textContent = keyStorage.en[i];
+      if (localStorage.capslock === 'true' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+        keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
+      }
+    });
+  } else {
+    localStorage.setItem('lang', 'ru');
+    keyStorage.code.forEach((item, i) => {
+      keyStorage.link[i].textContent = keyStorage.ru[i];
+      if (localStorage.capslock === 'true' && !(keyStorage.link[i].classList.contains('specialButton'))) {
+        keyStorage.link[i].textContent = keyStorage.link[i].textContent.toUpperCase();
+      }
+    });
+  }
 }
 
 for (let i = 0; i < 63; i += 1) {
   const button = new Box(keyStorage.ru[i], keyStorage.en[i], keyStorage.code[i]);
   button.setText();
   ul.appendChild(button.elem);
+  button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
   addClass();
   keyStorage.link.push(button.elem);
 }
+CapsLock();
+CapsLock();
 
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
@@ -108,6 +125,7 @@ document.addEventListener('keydown', (event) => {
     textarea.value = str;
     return;
   }
+
   if (event.code === 'Tab') {
     textarea.value += '   ';
     return;
@@ -116,19 +134,34 @@ document.addEventListener('keydown', (event) => {
     CapsLock();
     return;
   }
-  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+  if (event.code === 'ShiftLeft'|| event.code === 'ShiftRight') {
     Shift();
     return;
   }
-  if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
+  if (event.code === 'ControlLeft') {
+    keyStorage.changelanguage[0] = 1;
+    if (keyStorage.changelanguage[1] === 1) {
+      ChangeLanguage();
+    }
+    return;
+  }
+  if (event.code === 'ControlRight') {
     return;
   }
   if (event.code === 'ControlLeft' || event.code === 'ControlRight') {
     return;
   }
-  if (event.code === 'AltLeft' || event.code === 'AltRight') {
+  if (event.code === 'AltLeft') {
+    keyStorage.changelanguage[1] = 1;
+    if (keyStorage.changelanguage[0] === 1) {
+      ChangeLanguage();
+    }
     return;
   }
+  if (event.code === 'AltRight') {
+    return;
+  }
+
   if (event.code === 'Enter') {
     textarea.value += '\n';
     return;
@@ -142,6 +175,8 @@ document.addEventListener('keyup', (event) => {
   keyStorage.shiftArray.forEach((item, i) => {
     keyStorage.shiftArray[i].textContent = keyStorage.firstline[i];
   });
+  keyStorage.changelanguage[0] = 0;
+  keyStorage.changelanguage[1] = 0;
 });
 
 ul.addEventListener('mousedown', (event) => {
