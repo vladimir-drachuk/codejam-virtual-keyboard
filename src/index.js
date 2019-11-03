@@ -45,7 +45,7 @@ function CapsLock() {
 
 function Shift() {
   keyStorage.shiftArray.length = 0;
-  keyStorage.link.forEach((item, i) => {
+  keyStorage.link.forEach((_item, i) => {
     if (keyStorage.link[i].classList.contains('firstLine')) {
       keyStorage.shiftArray.push(keyStorage.link[i]);
       keyStorage.firstline.push(keyStorage.link[i].textContent);
@@ -94,32 +94,32 @@ for (let i = 0; i < 63; i += 1) {
   ul.appendChild(button.elem);
   button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
   if (button.elem.textContent === 'tab'
-  || button.elem.textContent === 'shift'
-  || button.elem.textContent === 'caps lock'
-  || button.elem.textContent === 'backspace'
-  || button.elem.textContent === 'alt'
-  || button.elem.textContent === 'enter'
-  || button.elem.textContent === 'ctrl'
-  || button.elem.textContent === 'win') {
+    || button.elem.textContent === 'shift'
+    || button.elem.textContent === 'caps lock'
+    || button.elem.textContent === 'backspace'
+    || button.elem.textContent === 'alt'
+    || button.elem.textContent === 'enter'
+    || button.elem.textContent === 'ctrl'
+    || button.elem.textContent === 'win') {
     button.elem.classList.add('specialButton');
   }
   if (button.elem.textContent === '1'
-  || button.elem.textContent === '2'
-  || button.elem.textContent === '3'
-  || button.elem.textContent === '4'
-  || button.elem.textContent === '5'
-  || button.elem.textContent === '6'
-  || button.elem.textContent === '7'
-  || button.elem.textContent === '8'
-  || button.elem.textContent === '9'
-  || button.elem.textContent === '0'
-  || button.elem.textContent === '-'
-  || button.elem.textContent === '='
-  || button.elem.textContent === '`'
-  || button.elem.textContent === 'ё'
-  || button.elem.textContent === 'Ё'
-  || button.elem.textContent === '\\'
-  || button.elem.textContent === '|') {
+    || button.elem.textContent === '2'
+    || button.elem.textContent === '3'
+    || button.elem.textContent === '4'
+    || button.elem.textContent === '5'
+    || button.elem.textContent === '6'
+    || button.elem.textContent === '7'
+    || button.elem.textContent === '8'
+    || button.elem.textContent === '9'
+    || button.elem.textContent === '0'
+    || button.elem.textContent === '-'
+    || button.elem.textContent === '='
+    || button.elem.textContent === '`'
+    || button.elem.textContent === 'ё'
+    || button.elem.textContent === 'Ё'
+    || button.elem.textContent === '\\'
+    || button.elem.textContent === '|') {
     button.elem.classList.add('firstLine');
   }
   keyStorage.link.push(button.elem);
