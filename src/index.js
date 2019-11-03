@@ -3,9 +3,6 @@ import keyStorage from './storage';
 const ul = document.createElement('ul');
 const p = document.createElement('p');
 const textarea = document.createElement('textarea');
-document.body.appendChild(textarea);
-document.body.appendChild(ul);
-document.body.appendChild(p);
 p.textContent = 'created by Vladimir Drachuk, RSShool 2019';
 
 class Box {
@@ -127,11 +124,14 @@ for (let i = 0; i < 63; i += 1) {
   }
   keyStorage.link.push(button.elem);
 }
+document.body.appendChild(textarea);
+document.body.appendChild(ul);
+document.body.appendChild(p);
 CapsLock();
 CapsLock();
 
 document.addEventListener('keydown', (event) => {
-  //event.preventDefault();
+  event.preventDefault();
   if (keyStorage.code.indexOf(event.code) !== -1) {
     keyStorage.link[keyStorage.code.indexOf(event.code)].classList.add('click');
   }
@@ -229,4 +229,3 @@ ul.addEventListener('mousedown', (event) => {
     textarea.value = str;
   }
 });
-
