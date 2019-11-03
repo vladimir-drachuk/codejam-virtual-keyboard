@@ -1,9 +1,12 @@
 import keyStorage from './storage';
 
 const ul = document.createElement('ul');
+const p = document.createElement('p');
 const textarea = document.createElement('textarea');
 document.body.appendChild(textarea);
 document.body.appendChild(ul);
+document.body.appendChild(p);
+p.textContent = 'created by Vladimir Drachuk, RSShool 2019';
 
 class Box {
   constructor(rutext, entext, code) {
@@ -128,7 +131,7 @@ CapsLock();
 CapsLock();
 
 document.addEventListener('keydown', (event) => {
-  event.preventDefault();
+  //event.preventDefault();
   if (keyStorage.code.indexOf(event.code) !== -1) {
     keyStorage.link[keyStorage.code.indexOf(event.code)].classList.add('click');
   }
@@ -215,6 +218,9 @@ ul.addEventListener('mousedown', (event) => {
   if (event.target.classList.contains('enter')) {
     textarea.value += '\n';
   }
+  if (event.target.classList.contains('tab')) {
+    textarea.value += '   ';
+  }
   if (event.target.classList.contains('capslock')) {
     CapsLock();
   }
@@ -223,3 +229,4 @@ ul.addEventListener('mousedown', (event) => {
     textarea.value = str;
   }
 });
+
