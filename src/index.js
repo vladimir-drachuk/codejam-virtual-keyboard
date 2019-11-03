@@ -1,9 +1,10 @@
 import keyStorage from './storage';
 
+const buttonAmount = 63;
 const ul = document.createElement('ul');
 const p = document.createElement('p');
 const textarea = document.createElement('textarea');
-p.textContent = 'created by Vladimir Drachuk, RSShool 2019';
+p.textContent = 'created by Vladimir Drachuk, RSSchool 2019';
 
 class Box {
   constructor(rutext, entext, code) {
@@ -88,39 +89,43 @@ function ChangeLanguage() {
   }
 }
 
-for (let i = 0; i < 63; i += 1) {
+for (let i = 0; i < buttonAmount; i += 1) {
   const button = new Box(keyStorage.ru[i], keyStorage.en[i], keyStorage.code[i]);
   button.setText();
   ul.appendChild(button.elem);
   button.elem.classList.add('button', keyStorage.code[i].toLocaleLowerCase());
-  if (button.elem.textContent === 'tab'
-    || button.elem.textContent === 'shift'
-    || button.elem.textContent === 'caps lock'
-    || button.elem.textContent === 'backspace'
-    || button.elem.textContent === 'alt'
-    || button.elem.textContent === 'enter'
-    || button.elem.textContent === 'ctrl'
-    || button.elem.textContent === 'win') {
-    button.elem.classList.add('specialButton');
-  }
-  if (button.elem.textContent === '1'
-    || button.elem.textContent === '2'
-    || button.elem.textContent === '3'
-    || button.elem.textContent === '4'
-    || button.elem.textContent === '5'
-    || button.elem.textContent === '6'
-    || button.elem.textContent === '7'
-    || button.elem.textContent === '8'
-    || button.elem.textContent === '9'
-    || button.elem.textContent === '0'
-    || button.elem.textContent === '-'
-    || button.elem.textContent === '='
-    || button.elem.textContent === '`'
-    || button.elem.textContent === 'ё'
-    || button.elem.textContent === 'Ё'
-    || button.elem.textContent === '\\'
-    || button.elem.textContent === '|') {
-    button.elem.classList.add('firstLine');
+  switch (button.elem.textContent) {
+    case 'tab':
+    case 'shift':
+    case 'caps lock':
+    case 'backspace':
+    case 'alt':
+    case 'enter':
+    case 'ctrl':
+    case 'win':
+      button.elem.classList.add('specialButton');
+      break;
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+    case '0':
+    case '-':
+    case '=':
+    case '`':
+    case 'ё':
+    case 'Ё':
+    case '\\':
+    case '|':
+      button.elem.classList.add('firstLine');
+      break;
+    default:
+      break;
   }
   keyStorage.link.push(button.elem);
 }
